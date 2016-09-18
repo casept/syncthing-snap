@@ -1,0 +1,21 @@
+name: syncthing
+version: "0.14.6"
+summary: syncthing
+description: |
+  Open Source Continuous File Synchronization
+
+confinement: strict
+grade: devel
+
+apps:
+  syncthing:
+    command: env GOMAXPROCS=1 ${SNAP}/syncthing -home=${SNAP_USER_DIR} -verbose -logfile=${SNAP_USER_DIR}/syncthing.log
+    daemon: simple
+    plugs: [network, network-bind, browser-support, network-control,firewall-control]
+
+parts:
+  syncthing:
+    source: https://github.com/syncthing/syncthing/releases/download/v0.14.6/syncthing-linux-amd64-v0.14.6.tar.gz
+    plugin: copy
+    files:
+      '*': './'
